@@ -27,6 +27,15 @@
     margin:8px 0 0;text-align:center;font-weight:bold;font-size:13px;letter-spacing:0.03em;
     color:#fff;background:var(--teal-dark);padding:7px 10px;border-radius:10px;
   }
+  .header-partner{font-size:12px;color:var(--muted);margin-top:2px;}
+  .clinic-info-card{
+    margin:10px 0 0;background:#fff;border-radius:12px;padding:12px 14px;
+    text-align:left;box-shadow:0 1px 3px rgba(15,60,45,.08);
+  }
+  .ci-row{margin-bottom:8px;}
+  .ci-row:last-child{margin-bottom:0;}
+  .ci-label{display:block;font-size:11px;font-weight:bold;color:var(--teal-dark);text-transform:uppercase;letter-spacing:.03em;margin-bottom:2px;}
+  .ci-text{display:block;font-size:12.5px;color:#173229;line-height:1.5;}
 
   .form-card{
     margin:16px 20px 0;background:#fff;border-radius:14px;padding:18px 16px;
@@ -110,7 +119,13 @@
   <header>
     <div class="eyebrow">Appointment Booking</div>
     <h1>Care<span class="hl-red">On</span> Medical Clinic</h1>
-    <div class="clinic-contact">CONTAI :: MOB. - 9933335131</div>
+    <div class="header-partner">(Partner With Healthians Labs)</div>
+    <div class="clinic-info-card">
+      <div class="ci-row"><span class="ci-label">Doctor Consultation</span><span class="ci-text">Medicine, Endocrinology, Neurology, Psychiatrist, Gastrology, Dermatology, Orthopedic, Pain Management, Surgery, Eye, Dental, Dietitian</span></div>
+      <div class="ci-row"><span class="ci-label">Services</span><span class="ci-text">Pathology Tests, Health Checkup Packages, Nursing &amp; Injection Service, Physiotherapy, Women &amp; Child Care, Diagnostic Support, Home Service</span></div>
+      <div class="ci-row"><span class="ci-label">Address</span><span class="ci-text">CONTAI (Amarttya Palli)</span></div>
+    </div>
+    <div class="clinic-contact">Enquiry &amp; Booking :: 9933335131</div>
   </header>
 
   <div class="form-card" id="formCard">
@@ -162,12 +177,21 @@
       </select>
     </div>
     <div class="field">
-      <label>Reffer Person</label>
-      <input type="text" id="fRefferPerson" placeholder="(optional)" />
+      <label>Reference</label>
+      <input type="text" id="fReference" placeholder="(optional)" />
     </div>
-    <div class="field">
-      <label>Amount</label>
-      <input type="number" id="fAmount" placeholder="e.g. 500" min="0" />
+    <div class="field-row">
+      <div class="field">
+        <label>Amount</label>
+        <input type="number" id="fAmount" placeholder="e.g. 500" min="0" />
+      </div>
+      <div class="field">
+        <label>Payment Mode</label>
+        <select id="fPaymentMode">
+          <option value="Cash">Cash</option>
+          <option value="Online">Online</option>
+        </select>
+      </div>
     </div>
     <button id="submitBtn">Book Appointment</button>
     <div id="formMsg"></div>
@@ -185,8 +209,9 @@
     <div class="slip-row"><span class="k">Appt Time</span><span class="v" id="sTime"></span></div>
     <div class="slip-row"><span class="k">Service</span><span class="v" id="sService"></span></div>
     <div class="slip-row"><span class="k">Doctor</span><span class="v" id="sDoctor"></span></div>
-    <div class="slip-row"><span class="k">Reffer Person</span><span class="v" id="sRefferPerson"></span></div>
+    <div class="slip-row"><span class="k">Reference</span><span class="v" id="sReference"></span></div>
     <div class="slip-row"><span class="k">Amount</span><span class="v" id="sAmount"></span></div>
+    <div class="slip-row"><span class="k">Payment Mode</span><span class="v" id="sPaymentMode"></span></div>
     <div class="slip-btns">
       <button id="printBtn">🖨 Print</button>
       <button id="pdfBtn">📄 PDF</button>
@@ -220,15 +245,16 @@
     <div><b>Place:</b> <span id="pPlace"></span></div>
   </div>
   <table class="p-table">
-    <thead><tr><th>Appt Date</th><th>Appt Time</th><th>Service</th><th>Doctor</th><th>Reffer Person</th><th class="num">Amount</th></tr></thead>
+    <thead><tr><th>Appt Date</th><th>Appt Time</th><th>Service</th><th>Doctor</th><th>Reference</th><th class="num">Amount</th><th>Payment</th></tr></thead>
     <tbody>
       <tr>
         <td id="pApptDate"></td>
         <td id="pApptTime"></td>
         <td id="pService"></td>
         <td id="pDoctor"></td>
-        <td id="pRefferPerson"></td>
+        <td id="pReference"></td>
         <td class="num" id="pAmount"></td>
+        <td id="pPaymentMode"></td>
       </tr>
     </tbody>
   </table>
@@ -237,9 +263,9 @@
 
 <script>
 // ⚠️ Set this to your Apps Script Web App URL after deploying (see setup guide)
-const BOOKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzblQ15P7KPkWHOPwSBkYarpRh_NBak-fQC9WuGt_dmVi2-ZY_IFtVJrEpGaMlYBoFUEA/exec';
+const BOOKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxxSjzDjqXdFQI3F0b2GoXJGuNquiRcuCDKCUAzVlyNum25tJdp9XRoKuBtAxNIhL8sWA/exec';
 
-// ⚠️ Your Google Sheet ID and the "Doctors" tab's gid  (find gid in the tab's URL after #gid=)
+// ⚠️ Your Google Sheet ID and the "Doctors" tab's gid (find gid in the tab's URL after #gid=)
 const SHEET_ID = '17NkxnJqZi-vxkDHNilYWV7KLHEe1370bF_UhbXfOvww';
 const DOCTORS_GID = '100345106';
 
@@ -252,8 +278,9 @@ const fDate = document.getElementById('fDate');
 const fTime = document.getElementById('fTime');
 const fService = document.getElementById('fService');
 const fDoctor = document.getElementById('fDoctor');
-const fRefferPerson = document.getElementById('fRefferPerson');
+const fReference = document.getElementById('fReference');
 const fAmount = document.getElementById('fAmount');
+const fPaymentMode = document.getElementById('fPaymentMode');
 const submitBtn = document.getElementById('submitBtn');
 const formMsg = document.getElementById('formMsg');
 const formCard = document.getElementById('formCard');
@@ -334,8 +361,9 @@ submitBtn.addEventListener('click', async () => {
   const apptTime = fTime.value;
   const service = fService.value.trim();
   const doctorName = fDoctor.value;
-  const refferPerson = fRefferPerson.value.trim();
+  const reference = fReference.value.trim();
   const amount = fAmount.value.trim();
+  const paymentMode = fPaymentMode.value;
 
   formMsg.textContent = '';
 
@@ -355,7 +383,7 @@ submitBtn.addEventListener('click', async () => {
     const res = await fetch(BOOKING_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ name, age, sex, place, mobile, apptDate, apptTime, service, doctorName, refferPerson, amount })
+      body: JSON.stringify({ name, age, sex, place, mobile, apptDate, apptTime, service, doctorName, reference, amount, paymentMode })
     });
     const data = await res.json();
     if(!data.success){
@@ -365,7 +393,7 @@ submitBtn.addEventListener('click', async () => {
       return;
     }
 
-    lastBooking = { bookingId: data.bookingId, submittedAt: data.submittedAt, name, age, sex, place, mobile, apptDate, apptTime, service, doctorName, refferPerson, amount };
+    lastBooking = { bookingId: data.bookingId, submittedAt: data.submittedAt, name, age, sex, place, mobile, apptDate, apptTime, service, doctorName, reference, amount, paymentMode };
     showSlip(lastBooking);
   } catch(err){
     formMsg.textContent = 'Network সমস্যা — আবার চেষ্টা করো';
@@ -397,8 +425,9 @@ function showSlip(b){
   document.getElementById('sTime').textContent = b.apptTime || '—';
   document.getElementById('sService').textContent = b.service || '—';
   document.getElementById('sDoctor').textContent = b.doctorName || '—';
-  document.getElementById('sRefferPerson').textContent = b.refferPerson || '—';
+  document.getElementById('sReference').textContent = b.reference || '—';
   document.getElementById('sAmount').textContent = b.amount ? ('Rs. ' + b.amount) : '—';
+  document.getElementById('sPaymentMode').textContent = b.paymentMode || '—';
 
   formCard.style.display = 'none';
   slipCard.classList.add('show');
@@ -421,8 +450,9 @@ function preparePrintArea(b){
   document.getElementById('pApptTime').textContent = b.apptTime || '—';
   document.getElementById('pService').textContent = b.service || '—';
   document.getElementById('pDoctor').textContent = b.doctorName || '—';
-  document.getElementById('pRefferPerson').textContent = b.refferPerson || '—';
+  document.getElementById('pReference').textContent = b.reference || '—';
   document.getElementById('pAmount').textContent = b.amount ? ('Rs. ' + b.amount) : '—';
+  document.getElementById('pPaymentMode').textContent = b.paymentMode || '—';
 }
 
 async function generatePdfBlob(b){
@@ -511,8 +541,9 @@ newBookingBtn.addEventListener('click', () => {
   fMobile.value = '';
   fService.value = '';
   fDoctor.value = '';
-  fRefferPerson.value = '';
+  fReference.value = '';
   fAmount.value = '';
+  fPaymentMode.value = 'Cash';
   const d = new Date();
   fDate.value = d.toISOString().split('T')[0];
   fTime.value = '';
