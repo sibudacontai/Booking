@@ -28,6 +28,7 @@
     color:#fff;background:var(--teal-dark);padding:7px 10px;border-radius:10px;
   }
   .header-partner{font-size:12px;color:var(--muted);margin-top:2px;}
+  .header-tagline{font-size:12px;color:var(--muted);font-style:italic;margin-top:1px;}
   .clinic-info-card{
     margin:10px 0 0;background:#fff;border-radius:12px;padding:12px 14px;
     text-align:left;box-shadow:0 1px 3px rgba(15,60,45,.08);
@@ -89,6 +90,8 @@
   .p-head h2{margin:0;font-size:22px;color:#173229;}
   .p-head div{font-size:12px;margin-top:4px;}
   .p-partner{font-size:11px;color:#000;margin-top:1px;}
+  .p-tagline{font-size:11px;color:#000;font-style:italic;margin-top:2px;}
+  .p-clinic-info{font-size:9.5px;color:#000;margin-top:5px;line-height:1.5;text-align:left;padding:0 10px;}
   .p-meta{display:flex;justify-content:space-between;font-size:12px;margin:8px 0;border-top:1px dashed #999;border-bottom:1px dashed #999;padding:6px 0;}
   .p-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px;}
   .p-table th{text-align:left;border-bottom:1px solid #333;padding:4px 3px;font-size:11px;text-transform:uppercase;}
@@ -120,10 +123,11 @@
     <div class="eyebrow">Appointment Booking</div>
     <h1>Care<span class="hl-red">On</span> Medical Clinic</h1>
     <div class="header-partner">(Partner With Healthians Labs)</div>
+    <div class="header-tagline">Caring Beyond Treatment</div>
     <div class="clinic-info-card">
       <div class="ci-row"><span class="ci-label">Doctor Consultation</span><span class="ci-text">Medicine, Endocrinology, Neurology, Psychiatrist, Gastrology, Dermatology, Orthopedic, Pain Management, Surgery, Eye, Dental, Dietitian</span></div>
       <div class="ci-row"><span class="ci-label">Services</span><span class="ci-text">Pathology Tests, Health Checkup Packages, Nursing &amp; Injection Service, Physiotherapy, Women &amp; Child Care, Diagnostic Support, Home Service</span></div>
-      <div class="ci-row"><span class="ci-label">Address</span><span class="ci-text">CONTAI (Amarttya Palli)</span></div>
+      <div class="ci-row"><span class="ci-label">Address</span><span class="ci-text">KUMARPUR (Amarttya Palli), CONTAI, PURBA MEDINIPUR</span></div>
     </div>
     <div class="clinic-contact">Enquiry &amp; Booking :: 9933335131</div>
   </header>
@@ -230,7 +234,13 @@
   <div class="p-head">
     <h2>Care<span class="hl-red">On</span> Medical Clinic</h2>
     <div class="p-partner">(Partner With Healthians Labs)</div>
-    <div>CONTAI :: MOB. - 9933335131</div>
+    <div class="p-tagline">Caring Beyond Treatment</div>
+    <div class="p-clinic-info">
+      <b>Doctor Consultation</b> (Medicine, Endocrinology, Neurology, Psychiatrist, Gastrology, Dermatology, Orthopedic, Pain Management, Surgery, Eye, Dental, Dietitian)<br/>
+      <b>Services</b> – (Pathology Tests, Health Checkup Packages, Nursing &amp; Injection Service, Physiotherapy, Women &amp; Child Care, Diagnostic Support, Home Service)<br/>
+      <b>Address</b> – KUMARPUR (Amarttya Palli), CONTAI, PURBA MEDINIPUR
+    </div>
+    <div>Enquiry &amp; Booking - 9933335131</div>
   </div>
   <div class="p-meta">
     <div><b>Booking ID:</b> <span id="pBookingId"></span></div>
@@ -258,16 +268,16 @@
       </tr>
     </tbody>
   </table>
-  <div class="p-footer">Thank you. Please arrive 10 minutes before your appointment time.</div>
+  <div class="p-footer">CareOn Medical - মানবিক স্বাস্থ্যসেবায় সর্বদা আপনার পাশে</div>
 </div>
 
 <script>
 // ⚠️ Set this to your Apps Script Web App URL after deploying (see setup guide)
-const BOOKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxxSjzDjqXdFQI3F0b2GoXJGuNquiRcuCDKCUAzVlyNum25tJdp9XRoKuBtAxNIhL8sWA/exec';
+const BOOKING_SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
 // ⚠️ Your Google Sheet ID and the "Doctors" tab's gid (find gid in the tab's URL after #gid=)
-const SHEET_ID = '17NkxnJqZi-vxkDHNilYWV7KLHEe1370bF_UhbXfOvww';
-const DOCTORS_GID = '100345106';
+const SHEET_ID = '1OH-UHD7UIYHrFk3bsa2Lth1E_03lI_ikyIA_71ByKdA';
+const DOCTORS_GID = 'PASTE_DOCTORS_TAB_GID_HERE';
 
 const fName = document.getElementById('fName');
 const fMobile = document.getElementById('fMobile');
@@ -408,6 +418,18 @@ function formatDateDisplay(iso){
   return `${d}/${m}/${y}`;
 }
 
+function formatTimeDisplay(t){
+  if(!t) return '—';
+  const parts = t.split(':');
+  if(parts.length < 2) return t;
+  let h = parseInt(parts[0], 10);
+  const m = parts[1];
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12;
+  if(h === 0) h = 12;
+  return `${h}:${m} ${ampm}`;
+}
+
 function ageSexDisplay(b){
   const age = b.age ? (b.age + ' yrs') : '';
   const sex = b.sex || '';
@@ -422,7 +444,7 @@ function showSlip(b){
   document.getElementById('sAgeSex').textContent = ageSexDisplay(b);
   document.getElementById('sPlace').textContent = b.place || '—';
   document.getElementById('sDate').textContent = formatDateDisplay(b.apptDate);
-  document.getElementById('sTime').textContent = b.apptTime || '—';
+  document.getElementById('sTime').textContent = formatTimeDisplay(b.apptTime);
   document.getElementById('sService').textContent = b.service || '—';
   document.getElementById('sDoctor').textContent = b.doctorName || '—';
   document.getElementById('sReference').textContent = b.reference || '—';
@@ -447,7 +469,7 @@ function preparePrintArea(b){
   document.getElementById('pAgeSex').textContent = ageSexDisplay(b);
   document.getElementById('pPlace').textContent = b.place || '—';
   document.getElementById('pApptDate').textContent = formatDateDisplay(b.apptDate);
-  document.getElementById('pApptTime').textContent = b.apptTime || '—';
+  document.getElementById('pApptTime').textContent = formatTimeDisplay(b.apptTime);
   document.getElementById('pService').textContent = b.service || '—';
   document.getElementById('pDoctor').textContent = b.doctorName || '—';
   document.getElementById('pReference').textContent = b.reference || '—';
