@@ -97,7 +97,8 @@
   .p-table th{text-align:left;border-bottom:1px solid #333;padding:4px 3px;font-size:11px;text-transform:uppercase;}
   .p-table td{padding:6px 3px;border-bottom:1px dotted #ccc;}
   .p-table .num{text-align:right;}
-  .p-footer{text-align:center;font-size:11px;color:#000;margin-top:14px;}
+  .p-footer{text-align:center;font-size:10px;color:#000;margin-top:12px;line-height:1.5;}
+  .p-footer-bn{margin-top:5px;font-weight:bold;}
 
   @media print{
     @page{ size: 210mm 148mm; margin: 10mm; }
@@ -268,12 +269,19 @@
       </tr>
     </tbody>
   </table>
-  <div class="p-footer">CareOn Medical - মানবিক স্বাস্থ্যসেবায় সর্বদা আপনার পাশে</div>
+  <div class="p-footer">
+    <div>Thank You. Your appointment is confirmed.</div>
+    <div>We Appreciate Your Trust in CareOn Medical Clinic.</div>
+    <div>We kindly request you to arrive at least 20 minutes before your scheduled time.</div>
+    <div>Your Health is Our Priority. We look forward to serving you.</div>
+    <div>Stay Healthy, Stay Safe!</div>
+    <div class="p-footer-bn">CareOn Medical - মানবিক স্বাস্থ্যসেবায় সর্বদা আপনার পাশে</div>
+  </div>
 </div>
 
 <script>
 // ⚠️ Set this to your Apps Script Web App URL after deploying (see setup guide)
-const BOOKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdy0IPXkbsAPGZtTpS6k6pBu-XOJzfy2m2glnjr5qOGlupe7vsp-zN1blZSv62wljh6g/exec';
+const BOOKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby__FuRoyua9OUkLv1jKVOBZOPbK62Vid-dcjmJAjlI_chzz2QGsiOVFUr0UytPKARdyg/exec';
 
 // ⚠️ Your Google Sheet ID and the "Doctors" tab's gid (find gid in the tab's URL after #gid=)
 const SHEET_ID = '17NkxnJqZi-vxkDHNilYWV7KLHEe1370bF_UhbXfOvww';
