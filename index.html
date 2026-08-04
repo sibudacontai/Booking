@@ -83,28 +83,32 @@
   /* Print/PDF receipt — laid out off-screen for html2canvas, ISO A5 landscape */
   #printArea{
     position:absolute; left:-9999px; top:0;
-    width:700px; background:#fff; padding:20px; color:#000;
+    width:700px; background:#fff; padding:14px 16px; color:#000;
     font-family:Arial,Helvetica,sans-serif;
+    border:1px solid #d8e4e0;
   }
-  .p-head{margin-bottom:10px;padding-bottom:10px;border-bottom:2px solid var(--teal-dark);}
-  .p-logos-row{display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:8px;}
-  .p-logo-side{height:110px;width:auto;object-fit:contain;}
-  .p-logo-main{height:150px;width:auto;object-fit:contain;}
-  .p-qr{height:110px;width:110px;object-fit:contain;border:1px solid #ddd;padding:3px;background:#fff;}
-  .p-clinic-info{font-size:10px;color:#000;line-height:1.6;text-align:center;}
-  .p-enquiry-line{font-size:11px;color:#000;text-align:center;margin-top:5px;font-weight:bold;}
-  .p-meta{display:flex;justify-content:space-between;font-size:12px;margin:8px 0;border-top:1px dashed #999;border-bottom:1px dashed #999;padding:6px 0;}
-  .p-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px;}
-  .p-table th{text-align:left;border-bottom:1px solid #333;padding:4px 3px;font-size:11px;text-transform:uppercase;}
-  .p-table td{padding:6px 3px;border-bottom:1px dotted #ccc;}
+  .p-head{margin-bottom:8px;padding-bottom:8px;border-bottom:2px solid var(--teal-dark);}
+  .p-logos-row{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:6px;}
+  .p-logo-side{height:95px;width:auto;object-fit:contain;}
+  .p-logo-main{height:130px;width:auto;object-fit:contain;}
+  .p-qr{height:95px;width:95px;object-fit:contain;border:1px solid #ddd;padding:3px;background:#fff;}
+  .p-clinic-info{font-size:7.6px;color:#000;line-height:1.65;text-align:center;letter-spacing:-0.15px;}
+  .p-info-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .p-enquiry-line{font-size:10.5px;color:#fff;text-align:center;margin-top:6px;font-weight:bold;background:var(--teal-dark);padding:5px 8px;border-radius:4px;}
+  .p-meta{display:flex;justify-content:space-between;font-size:12px;margin:0;background:#f4f9f7;padding:6px 10px;border-bottom:1px solid #e1eee8;}
+  .p-meta:first-of-type{margin-top:8px;border-top:1px solid #e1eee8;}
+  .p-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12.5px;}
+  .p-table th{text-align:left;background:var(--teal-dark);color:#fff;padding:6px 5px;font-size:10.5px;text-transform:uppercase;letter-spacing:.02em;}
+  .p-table th.num{text-align:right;}
+  .p-table td{padding:7px 5px;border-bottom:1px solid #e1eee8;}
   .p-table .num{text-align:right;}
-  .p-footer{text-align:center;font-size:10px;color:#000;margin-top:12px;padding-top:8px;border-top:1px dashed #999;line-height:1.6;}
+  .p-footer{text-align:center;font-size:9.5px;color:#000;margin-top:10px;padding-top:7px;border-top:1px dashed #999;line-height:1.55;}
   .p-footer-line{margin-bottom:3px;}
   .p-footer-line:last-of-type{margin-bottom:0;}
-  .p-footer-bn{margin-top:6px;font-weight:bold;font-size:10.5px;color:var(--teal-dark);}
+  .p-footer-bn{margin-top:6px;font-weight:bold;font-size:10px;color:var(--teal-dark);}
 
   @media print{
-    @page{ size: 210mm 148mm; margin: 10mm; }
+    @page{ size: 210mm 148mm; margin: 6mm; }
     html, body{ height: auto !important; margin:0; padding:0; }
     #app{ display:none !important; }
     #printArea{
@@ -130,8 +134,8 @@
     <div class="header-tagline">Complete Trusted Healthcare Solution</div>
     <div class="header-tagline">Caring Beyond Treatment</div>
     <div class="clinic-info-card">
-      <div class="ci-row"><span class="ci-label">Doctor Consultation</span><span class="ci-text">Medicine, Endocrinology, Neurology, Psychiatrist, Gastrology, Dermatology, Orthopedic, PMR, Surgery, Eye , Dental , Dietitian</span></div>
-      <div class="ci-row"><span class="ci-label">Services</span><span class="ci-text">Pathology Tests Packages, Nursing &amp; Injection Service, Physiotherapy, Women &amp; Child Care, Imaging Support, ECG, Home Service</span></div>
+      <div class="ci-row"><span class="ci-label">Doctor Consultation</span><span class="ci-text">Medicine, Endocrinology, Neurology, Psychiatrist, Gastrology, Dermatology, Orthopedic, Pain Management, Surgery, Eye Care, Dental Care, Dietitian</span></div>
+      <div class="ci-row"><span class="ci-label">Services</span><span class="ci-text">Pathology Tests, Health Checkup Packages, Nursing &amp; Injection Service, Physiotherapy, Women &amp; Child Care, Diagnostic Support, Home Service</span></div>
       <div class="ci-row"><span class="ci-label">Address</span><span class="ci-text">KUMARPUR (Amarttya Palli), CONTAI, PURBA MEDINIPUR, 721401</span></div>
     </div>
     <div class="clinic-contact">Enquiry &amp; Booking - 9933335131 / 9933520248 :: Mail - info@careonmedical.in Web - www.careonmedical.in</div>
@@ -244,9 +248,9 @@
       <img class="p-qr" src="qr.jpg" alt="Scan to book" />
     </div>
     <div class="p-clinic-info">
-      <b>Doctor Consultation</b> (Medicine, Endocrinology, Neurology, Psychiatrist, Gastrology, Dermatology, Orthopedic, Pain Management, Surgery, Eye Care, Dental Care, Dietitian)<br/>
-      <b>Services</b> – (Pathology Tests, Health Checkup Packages, Nursing &amp; Injection Service, Physiotherapy, Women &amp; Child Care, Diagnostic Support, Home Service)<br/>
-      <b>Address</b> – KUMARPUR (Amarttya Palli), CONTAI, PURBA MEDINIPUR, 721401
+      <div class="p-info-line"><b>Doctor Consultation</b> - Medicine, Endocrinology, Neurology, Psychiatrist, Gastrology, Dermatology, Orthopedic, Pain Management, Surgery, Eye Care, Dental Care, Dietitian</div>
+      <div class="p-info-line"><b>Clinic &amp; Home Service</b> – Pathology Test Package, Nursing &amp; Injection Service, Physiotherapy, Women &amp; Child Care, Imaging Support, ECG</div>
+      <div class="p-info-line"><b>Address</b> – KUMARPUR (Amarttya Palli), CONTAI, PURBA MEDINIPUR, 721401</div>
     </div>
     <div class="p-enquiry-line">Enquiry &amp; Booking - 9933335131 / 9933520248 :: Mail - info@careonmedical.in Web - www.careonmedical.in</div>
   </div>
